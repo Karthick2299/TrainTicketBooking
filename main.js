@@ -1,7 +1,4 @@
-const { count } = require("console");
 const express = require("express");
-const { type } = require("os");
-const { isNativeError } = require("util/types");
 const app = express();
 const database = require("./database/configurationDB");
 const errResponse = require("./errorAndResponse");
@@ -40,12 +37,6 @@ app.get("/booking", (request, response) => {
 app.get("/booking/:trainNumber/:date", (request, response) => {
   const trainNo = parseInt(request.params.trainNumber);
   const { date } = request.params;
-
-  console.log("Train Number is : " + trainNo);
-  console.log(`date format Input: ${date}`);
-
-  console.log("type of TrainNo : " + typeof trainNo);
-  console.log("date : " + typeof date);
 
   database.query(
     `SELECT 
@@ -153,15 +144,8 @@ app.put("/booking/:trainNumber/:date/:seats", (request, response) => {
         return;
       }
 
-      // else if( data.seat_1 == 0 && data.seat_2 == 0 && data.seat_3 == 0 && data.seat_4 == 0){
-      //   response.json("Sorry, Seats not Available");
-      // }
-
+ 
       const firstValue = counts - seats;
-      console.log(firstValue);
-
-      console.log("Set Query Values");
-      console.log(setQuery);
 
       database.query(
         `UPDATE Bookings ${setQuery} WHERE Booking_id = ${BookingId} `,
